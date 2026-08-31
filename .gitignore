@@ -1,0 +1,12 @@
+.env
+*.env
+!.env.example
+profile.json
+!profile.example.json
+pitches.json
+!pitches.example.json
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+*.log
