@@ -15,6 +15,7 @@ sanitized copy of real, actively-used personal tooling -- see
 | `iimjobs-agent/` | Sibling auto-apply agent for IIMJobs.com -- same objective, structurally different apply flow |
 | `shared/` | Common logic both agents depend on: candidate profile, local-LLM screening answers, relevance scoring |
 | `linkedin-scraper/` | LinkedIn hiring-post scraper + a connection-message generator |
+| `quick-paste-hotkeys/` | Hammerspoon config: global hotkeys that type your LinkedIn/GitHub URLs directly into any focused field |
 
 ## A note on what's real vs. placeholder
 
@@ -29,6 +30,9 @@ sanitized copy of real, actively-used personal tooling -- see
   narratives that originally named specific companies (e.g. an external-ATS
   redirect encountered live) have been genericized to describe the technical
   pattern without identifying the employer.
+- **Exception: `quick-paste-hotkeys/` ships with real links.** LinkedIn and
+  GitHub profile URLs are meant to be shared publicly, so that config is left
+  as-is rather than genericized — swap in your own to reuse it.
 
 ## Requirements (vary by tool, see subfolder READMEs)
 
