@@ -185,6 +185,29 @@ credential redaction) — see Judgment Calls below for the full reasoning.
   a working, complete demo end-to-end. The test copy was deleted afterward;
   no `quiz_data.js`/`episode.json`/`output/` were left in the staged repo.
 
+### newsletter-outreach/
+Added 2026-09-09, built fresh for this repo rather than copied-and-redacted
+from an existing script (the real working version lives in the CARS24
+CleverTap toolkit's `about-me/` folder, not in any source directory this
+report otherwise draws from).
+- `send_newsletter_email.py` — written generic from the start: no hardcoded
+  Desktop paths, no hardcoded recipient/sender, no hardcoded image filenames.
+  Images are resolved by looking for a file matching each `{{IMAGE_URL: ...}}`
+  token's literal filename inside a `--images-dir` the caller passes in.
+  Auth (`GMAIL_SENDER`/`GMAIL_APP_PASSWORD`) comes from the environment or a
+  local `.env` (gitignored).
+- `email-template.example.html` — the real, personal, filled-in version (with
+  the actual name, phone number, employer metrics, and photos) was **not**
+  copied here. This is a from-scratch genericized version of the same design
+  system (masthead, sticker badges, quick-facts list, unboxed stat strip,
+  bordered pull-quote, per-role story sections, categorized toolkit) with
+  every fact replaced by a bracketed placeholder (`[Your Name]`, `[XX%]`,
+  `company-1-screenshot.png`, etc.).
+- `.env.example`, `README.md` — new.
+- Grepped the finished folder (case-insensitive) for the real name, real
+  phone number, real email address, `Desktop`/`scratchpad` path fragments,
+  and the Gmail App Password string — zero hits.
+
 ## Secret/PII patterns checked and redacted
 
 | Pattern | Found in | Replaced with |
@@ -197,6 +220,7 @@ credential redaction) — see Judgment Calls below for the full reasoning.
 | Real unaired quiz Q&A content (~40 snippets + running order with answers) | `build_rounds.js`, `build_master.js`, `SKILL.md` | placeholder examples matching `quiz_data.example.js` |
 | Real episode title/location | `episode.json` | `episode.example.json` with placeholder title/location |
 | Specific real applied-job company name in an incident anecdote | `naukri-apply-agent.md` (→ `NOTES.md`) | genericized to "a real submitted application" |
+| Real name, phone number, employer metrics, and photos in the filled-in outreach email | (real version lives outside this repo, in the CleverTap toolkit's `about-me/`) | `newsletter-outreach/email-template.example.html` — bracketed placeholders throughout, written fresh rather than redacted from the real file |
 
 No hits for any of the CleverTap/Gupshup/Snowflake account IDs, passcodes,
 API keys, session-token patterns, or the colleague name from
@@ -222,6 +246,14 @@ long tokens, credential pairs) were found during the final broad grep sweep.
 - **JavaScript**: `node --check` passed on all 8 `.js` files.
 - **JSON**: all 4 `.json` files (`profile.example.json`, `pitches.example.json`,
   `episode.example.json`, `package.json`) parse successfully.
+- **newsletter-outreach/send_newsletter_email.py**: `py_compile` passed;
+  also runtime-smoke-tested by calling `build_message()` directly against
+  `email-template.example.html` with 4 tiny placeholder images matching its
+  `{{IMAGE_URL: ...}}` tokens — confirmed all tokens resolved to `cid:`
+  references with no leftover unresolved tokens, all 4 images attached, and
+  the subject correctly extracted from the HTML `<title>`. Did not exercise
+  the actual SMTP send (`--to` path), since that requires live Gmail
+  credentials.
 - **park-quiz-show full pipeline**: `npm install && node scripts/build_all.js`
   ran end-to-end in an isolated scratch copy against the placeholder data —
   produced all 4 `.docx` files and (LibreOffice being available) all 4 `.pdf`
