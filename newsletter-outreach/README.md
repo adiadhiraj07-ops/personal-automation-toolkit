@@ -71,3 +71,38 @@ python3 send_newsletter_email.py \
 (`[Your Name]`, `[XX%]`, etc.) and placeholder image filenames -- it's the
 design system, not a real person's actual pitch. Swap in your own facts,
 photos, and numbers before sending anything.
+
+## In progress: a full send pipeline
+
+This started as just the sender above. It's grown into a three-stage
+pipeline, each stage owned by its own Claude Code subagent:
+
+1. **Find leads** -- broad LinkedIn people-search by role (not a fixed
+   company list), parse each result's self-reported current employer from
+   their own headline, resolve a real domain, guess the likely email
+   pattern (`first.last@`, `first@`, etc.), and verify it directly against
+   the domain's mail server via SMTP `RCPT TO` probing -- no paid
+   email-finder API needed.
+2. **Draft & improve content** -- the email above, plus a periodic review
+   pass that looks at real reply/bounce data to suggest specific content
+   changes rather than guessing.
+3. **Send** -- a daily batch (volume-capped, to protect sender reputation)
+   with an explicit approval gate before anything real goes out, plus
+   read-only IMAP bounce/reply tracking so the same address never gets
+   double-contacted.
+
+The verification step in particular turned into a real lesson in SMTP
+probing's failure modes: a naive "stop at the first pattern that returns
+valid" approach produced two real bounces, traced to (a) a transient
+IP-reputation block on the *correct* pattern silently falling through to a
+worse guess, and (b) a mail server whose recipient validation was
+inconsistent enough that two different guessed patterns both looked valid.
+The fix retries the highest-confidence guess specifically when blocked
+(not when genuinely rejected) and cross-checks for ambiguity before
+trusting any single match.
+
+The lead-finding and sending code isn't published here yet -- it currently
+has real personal data baked in (a live contacts list, hardcoded sender
+identity) that needs the same placeholder-extraction treatment as
+`shared/profile.example.json` got for the job-search agents before it's
+safe to share. That pass is next.
