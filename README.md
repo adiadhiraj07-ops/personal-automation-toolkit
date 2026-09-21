@@ -16,7 +16,7 @@ sanitized copy of real, actively-used personal tooling -- see
 | `shared/` | Common logic both agents depend on: candidate profile, local-LLM screening answers, relevance scoring |
 | `linkedin-scraper/` | LinkedIn hiring-post scraper + a connection-message generator |
 | `quick-paste-hotkeys/` | Hammerspoon config: global hotkeys that type your LinkedIn/GitHub URLs directly into any focused field |
-| `newsletter-outreach/` | Newsletter-style cold-outreach email (real story + metrics, zine-like design) sent via Gmail SMTP with inline CID images -- no image hosting needed |
+| `newsletter-outreach/` | Newsletter-style cold-outreach email (real story + metrics, zine-like design) sent via Gmail SMTP with inline CID images -- no image hosting needed. Documents the four-agent pipeline around it (find leads, verify emails, create the newsletter, send and monitor the inbox) in its `SKILL.md` |
 
 ## A note on what's real vs. placeholder
 

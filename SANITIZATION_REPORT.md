@@ -207,6 +207,18 @@ report otherwise draws from).
 - Grepped the finished folder (case-insensitive) for the real name, real
   phone number, real email address, `Desktop`/`scratchpad` path fragments,
   and the Gmail App Password string — zero hits.
+- **Update 2026-09-21:** added `SKILL.md` (a generic overview of the
+  four-agent pipeline: find leads, verify emails, create the newsletter, send
+  and monitor the inbox), rewrote the pipeline section of `README.md`, and
+  updated this folder's row in the root `README.md`. Documentation only: no
+  new code, and the lead-finding, verification and inbox-check code stays
+  unpublished. Written generic from the start, describing each capacity by
+  role. Swept the three edited files (case-insensitive) for the real name,
+  personal email, phone number, employer names, machine paths, mail domains
+  and company names from real incidents, and third-party newsletter names.
+  The only hit is the pre-existing `someone@example.com` placeholder in the
+  usage example. The sweep was validated with a positive control against a
+  private file that does contain such data.
 
 ## Secret/PII patterns checked and redacted
 
